@@ -1,6 +1,5 @@
-
 {
-  "name": "vault-app",
+  "name": "feature_3022411013_vaultapp",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,5 +8,17 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "5.1.0"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vandanaunipune-del/sepm_project_submission.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vandanaunipune-del/sepm_project_submission/issues"
+  },
+  "homepage": "https://github.com/vandanaunipune-del/sepm_project_submission#readme",
+  "description": ""
 }
