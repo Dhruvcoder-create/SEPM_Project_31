@@ -14,9 +14,11 @@ async function main() {
   
   const output = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
 
-  // 2. Extract the ABI and Bytecode for YieldVault
-  const contractName = "YieldVault";
-  const sourceFile = Object.keys(output.contracts).find(key => key.includes(contractName));
+  // 2. Extract the ABI and Bytecode for helloworld
+  const contractName = "helloworld";
+  const sourceFile = Object.keys(output.contracts).find(
+    key => output.contracts[key] && output.contracts[key][contractName]
+  );
   
   if (!sourceFile) {
     throw new Error(`Contract ${contractName} not found in build output.`);
@@ -47,34 +49,16 @@ async function main() {
   const wallet = new ethers.Wallet(rawKey, provider);
   console.log("Deploying contracts with the account:", wallet.address);
 
-  // 5. Define constructor arguments
-  // Sepolia USDC test address used as an example. Replace if using your own token.
-  const assetAddress = "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238"; 
-  const name = "Yield Vault Share";
-  const symbol = "yvSHARE";
-  const initialOwner = wallet.address;
-  const feeRecipient = wallet.address;
-  const performanceFeeBps = 1000; // 10%
-  const depositCap = ethers.parseUnits("1000000", 18);
-
-  // 6. Deploy
-  console.log("Deploying YieldVault...");
+  // 5. Deploy (helloworld takes no constructor arguments)
+  console.log(`Deploying ${contractName}...`);
   const factory = new ethers.ContractFactory(abi, bytecode, wallet);
   
-  const vault = await factory.deploy(
-    assetAddress,
-    name,
-    symbol,
-    initialOwner,
-    feeRecipient,
-    performanceFeeBps,
-    depositCap
-  );
+  const contract = await factory.deploy();
 
-  await vault.waitForDeployment();
-  const contractAddress = await vault.getAddress();
+  await contract.waitForDeployment();
+  const contractAddress = await contract.getAddress();
   
-  console.log(`YieldVault successfully deployed to: ${contractAddress}`);
+  console.log(`${contractName} successfully deployed to: ${contractAddress}`);
   console.log(`View on Sepolia Etherscan: https://sepolia.etherscan.io/address/${contractAddress}`);
 }
 
