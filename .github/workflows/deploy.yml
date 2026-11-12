@@ -1,6 +1,11 @@
 name: Compile and Deploy to Sepolia
 
 on:
+  push:
+    branches:
+      - main
+      - 'feature_*'
+  workflow_dispatch:
   workflow_call:
 
 jobs:
